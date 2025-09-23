@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Midtrans Payment</title>
+    <!--
+      This page expects either a query parameter `snap_token` or `order_id`.
+      If `snap_token` is present it will call snap.pay directly.
+      If only `order_id` is present it will attempt to fetch the token from
+      `/api/v1/payments/midtrans/token?order_id=...` on the same origin.
+      Adjust backend routes as necessary.
+    -->
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-Sb20Aumu26Ieen-a"></script>
+    <style>
+      body { font-family: Arial, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; }
+      .card { max-width:420px; padding:24px; box-shadow:0 8px 30px rgba(0,0,0,0.1); border-radius:8px; text-align:center; }
+      .btn { display:inline-block; padding:12px 20px; background:#1e88e5; color:white; border-radius:6px; text-decoration:none; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Proceed to Payment</h2>
+      <p id="info">Preparing payment...</p>
+      <p><a id="payBtn" class="btn" href="#">Pay Now</a></p>
+    </div>
+
+    <script>
+      (function(){
+        const params = new URLSearchParams(window.location.search);
+        const snapToken = params.get('snap_token');
+        const orderId = params.get('order_id');
+        const finishUrl = params.get('finish_url') || `${window.location.origin}/payments/success`;
+
+        function onError(msg){
+          document.getElementById('info').textContent = 'Error: ' + msg;
+        }
+
+        async function fetchTokenForOrder(orderId){
+          try{
+            const resp = await fetch(`/api/v1/payments/midtrans/token?order_id=${encodeURIComponent(orderId)}`);
+            if(!resp.ok) throw new Error('Token fetch failed');
+            const data = await resp.json();
+            return data.snap_token || null;
+          }catch(e){
+            console.error(e);
+            return null;
+          }
+        }
+
+        async function start(){
+          let token = snapToken;
+          if(!token && orderId){
+            token = await fetchTokenForOrder(orderId);
+          }
+
+          const payBtn = document.getElementById('payBtn');
+
+          if(!token){
+            document.getElementById('info').textContent = 'No snap token available. Redirecting to payment page...';
+            // If no token, attempt to redirect to VT-Web style URL provided by order (backend could return redirect_url)
+            // Backend may provide a redirect_url endpoint for order
+            try{
+              const resp = await fetch(`/api/v1/payments/midtrans/redirect?order_id=${encodeURIComponent(orderId)}`);
+              if(resp.ok){
+                const json = await resp.json();
+                if(json.redirect_url){ window.location.href = json.redirect_url; return; }
+              }
+            }catch(e){ console.error(e); }
+            onError('Unable to start payment.');
+            return;
+          }
+
+          document.getElementById('info').textContent = 'Ready to pay';
+          payBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            try{
+              snap.pay(token, {
+                onSuccess: function(result){
+                  // redirect to finish url with order id if present
+                  const u = new URL(finishUrl);
+                  if(orderId) u.searchParams.set('order_id', orderId);
+                  if(result.transaction_id) u.searchParams.set('transaction_id', result.transaction_id);
+                  window.location.href = u.toString();
+                },
+                onPending: function(result){
+                  const u = new URL(finishUrl);
+                  if(orderId) u.searchParams.set('order_id', orderId);
+                  u.searchParams.set('status','pending');
+                  window.location.href = u.toString();
+                },
+                onError: function(err){
+                  const u = new URL(finishUrl);
+                  if(orderId) u.searchParams.set('order_id', orderId);
+                  u.searchParams.set('status','error');
+                  window.location.href = u.toString();
+                }
+              });
+            }catch(err){
+              onError(err.message || err);
+            }
+          });
+        }
+
+        start();
+      })();
+    </script>
+  </body>
+</html>

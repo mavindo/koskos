@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Payment Finished</title>
+    <style>
+      body { font-family: Arial, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; }
+      .card { max-width:640px; padding:24px; box-shadow:0 8px 30px rgba(0,0,0,0.08); border-radius:8px; text-align:center; }
+      .meta { color:#666; margin-top:8px }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Payment Status</h1>
+      <p id="status">Checking...</p>
+      <p class="meta" id="meta"></p>
+      <p><a id="back" href="#">Return to App</a></p>
+    </div>
+
+    <script>
+      (function(){
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('order_id');
+        const status = params.get('status') || 'unknown';
+        const transactionId = params.get('transaction_id');
+
+        document.getElementById('status').textContent = status.toUpperCase();
+        document.getElementById('meta').textContent = 'order_id: ' + (orderId || '-') + (transactionId ? ' | transaction_id: ' + transactionId : '');
+
+        document.getElementById('back').addEventListener('click', function(e){
+          e.preventDefault();
+          // If app registered a custom URL scheme or deep link, redirect to it here.
+          // Default: go to origin root
+          window.location.href = '/';
+        });
+      })();
+    </script>
+  </body>
+</html>
