@@ -2024,6 +2024,7 @@ file_selector_platform_interface
 file_selector_windows
 flutter_lints
 flutter_plugin_android_lifecycle
+go_router
 google_fonts
 image_picker_for_web
 image_picker_linux
