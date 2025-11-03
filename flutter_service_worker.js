@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "1458513541e7389d384041c7b930c24b",
+const RESOURCES = {"flutter_bootstrap.js": "995ec334d3baf5b47e1d31f047b722b0",
 "version.json": "c715f6190636140dfd4afecd0a5c618e",
 "index.html": "69de7b0ac64f7d7beff37e77f3c10a84",
 "/": "69de7b0ac64f7d7beff37e77f3c10a84",
@@ -11,9 +11,11 @@ const RESOURCES = {"flutter_bootstrap.js": "1458513541e7389d384041c7b930c24b",
 "firebase-messaging-sw.js": "21d95ba410c3b09b727024211b56560b",
 "main.dart.js": "c5e82956e214ede44d85d6fbba132b2e",
 "payment/finish.html": "5d7d2978f6b3cf747643bdc1ce2f9402",
+"_docs/index.html": "6df261eaf4bce8f3c380dc52d1950cb8",
 "_docs/NGINX_404_FIX.md": "2c6526d3c82a810ec3b7ab3d5853e202",
 "_docs/nginx-kosandcost.conf": "44a11558661d10b8340b3541ae0b53a0",
 "_docs/README.md": "82aa32a319217877dbc1f6d11d7e8c8f",
+"_docs/BUILD_DEPLOY_GUIDE.md": "6b2ec22783d0900791fb4ef5b716f6e3",
 "_docs/WEB_LOADING_OPTIMIZATION.md": "5b771f6133c077a51c2ff9d79130c953",
 "_docs/deploy.sh": "ab7474f8b6d1de927394d025f11e8362",
 "_docs/minimal_fix.sh": "09d00e4273849473a4604636e9a1133c",
