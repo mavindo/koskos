@@ -18,19 +18,107 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Kos and Cost - Find Your Perfect Home. Discover the best boarding houses and rental accommodations near you.">
+
+  <!-- Performance optimization -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://rentkos-api.stg.jtisrv.com">
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="flutter_bootstrap.js" as="script">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="kosandcost">
+  <meta name="apple-mobile-web-app-title" content="Kos and Cost">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>kosandcost</title>
+  <title>Kos and Cost - Find Your Perfect Home</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    /* Loading container */
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    /* Logo */
+    #loading .logo {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    /* Loading spinner */
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    /* Loading text */
+    #loading .loading-text {
+      margin-top: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      animation: fade 1.5s ease-in-out infinite;
+    }
+    
+    /* Animations */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(0.95); }
+    }
+    
+    @keyframes fade {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* Hide loading when Flutter is ready */
+    .flutter-ready #loading {
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+      pointer-events: none;
+    }
+  </style>
 
   <script type="text/javascript">
     // Single Page Apps for GitHub Pages
@@ -56,6 +144,26 @@
   </script>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div id="loading">
+    <img class="logo" src="icons/Icon-192.png" alt="Kos and Cost Logo">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading Kos and Cost...</p>
+  </div>
+
+  <script>
+    // Remove loading screen when Flutter is ready
+    window.addEventListener('flutter-first-frame', function () {
+      document.body.classList.add('flutter-ready');
+      setTimeout(function() {
+        var loader = document.getElementById('loading');
+        if (loader) {
+          loader.remove();
+        }
+      }, 500);
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
