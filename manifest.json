@@ -1,11 +1,11 @@
 {
-    "name": "rental_super_app_flutter",
-    "short_name": "rental_super_app_flutter",
+    "name": "Kos and Cost",
+    "short_name": "kosandcost",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Find Your Perfect Home - Kos and Cost rental accommodation app.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
