@@ -45,7 +45,9 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Use BrandColors primary gradient (primaryBlue -> primaryTeal) from
+      `lib/themes/brand_colors.dart` */
+    background: linear-gradient(135deg, #2E86AB 0%, #4FB3A9 100%);
     }
     
     /* Loading container */
@@ -55,7 +57,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* match body gradient so loading overlay blends with app theme (BrandColors) */
+  background: linear-gradient(135deg, #2E86AB 0%, #4FB3A9 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -63,24 +66,43 @@
       z-index: 9999;
     }
     
-    /* Logo */
+    /* Logo (improved): use a translucent surface instead of solid white card so the
+       icon is visible on the purple gradient background */
     #loading .logo {
       width: 150px;
       height: 150px;
       margin-bottom: 30px;
-      background: white;
-      padding: 20px;
+      /* subtle translucent surface to keep contrast but avoid a full white card */
+      background: rgba(255,255,255,0.08);
+      padding: 18px;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.12);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
       animation: pulse 2s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Ensure the image inside the logo scales properly and gets a subtle drop shadow */
+    img.logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.22));
     }
     
     /* Loading spinner */
     .spinner {
       width: 50px;
       height: 50px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top: 4px solid #ffffff;
+      /* spinner uses semi-transparent white to contrast on blue gradient */
+      border: 4px solid rgba(255,255,255,0.28);
+      border-top: 4px solid rgba(255,255,255,0.95);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
