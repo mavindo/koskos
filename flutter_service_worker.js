@@ -3,13 +3,13 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "9605586eeb5d26881b804e41b7e71b7e",
+const RESOURCES = {"flutter_bootstrap.js": "48d341c6bf6c762fed44fb4e8df14c05",
 "version.json": "d8e525886f7d32889b47c1e1e81ceac0",
 "index.html": "1208dd5ecccf5beec9cbd358d05caddc",
 "/": "1208dd5ecccf5beec9cbd358d05caddc",
 "midtrans/pay.html": "7b5dd04e354987539b15dd76b065e561",
 "firebase-messaging-sw.js": "21d95ba410c3b09b727024211b56560b",
-"main.dart.js": "0f4f64d64d23777da16c34ef1cb02777",
+"main.dart.js": "7db815e6dee9208985800d0b1b6ec517",
 "payment/finish.html": "5d7d2978f6b3cf747643bdc1ce2f9402",
 "_docs/TROUBLESHOOTING_BLANK_SCREEN.md": "f54289f399b75c9b6dc13c0a52df45d7",
 "_docs/index.html": "6df261eaf4bce8f3c380dc52d1950cb8",
